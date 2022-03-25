@@ -1,1 +1,2 @@
-# graph-partition
+# Graph Partition
+- wiki持续更新~
