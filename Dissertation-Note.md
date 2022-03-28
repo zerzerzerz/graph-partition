@@ -38,7 +38,23 @@
 - Representation of Hypergraph
   - 基于clique（net->完全图）
   - 基于bipartite（二分图表示法）
+  - ![](fig/Dissertation-Note/超图的表示.jpg)
 ### k-way Hypergraph Partitioning Problem
+- 两种常见的metric
+  - cut-net适合2分的时候使用
+  - connectivity适合$k$分$(k \ge 3)$的时候使用
+- 在VLSI中，如果一个net连接了多个block，那么会消耗更多的资源，因此此时引入connectivity这种metric是更加合理的
+- 算法分类
+  - Recursive Bisection
+    - 适合k是2的幂次的时候使用，如果k不满足，得到的块的大小将需要调整
+  - Direct $k$-way partitioning
+    - 直接堆initial hyper graph进行k-partitioning
 ### Related Problem Formulations
+- 其他的metric
+- Naturally Imbalanced Partitions
+  - 用户自定义两个bound，修改之前的balance约束
+- 其他的任务（Hyperedge partitioning）
+- 多目标、多约束
 ### Computational Complexity
+- 略
 ### Algorithmic Approaches
