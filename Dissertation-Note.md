@@ -112,3 +112,13 @@
 
 ## $n$-Level Hypergraph Partitioning
 - 正式介绍Karlsruhe Hypergraph Partitioning也就是KaHyPar
+### Data Structure
+- 将Hypergraph表示为bipartite（二分图）G，G的节点集是超图的vertices和nets，如果$v \in e$，那么$(e,v)$就是G中的一条edge
+- ![](fig/Dissertation-Note/超图的二分图表示的数据结构.jpg)
+  - $V$数组表示了每个vertex属于的net
+  - $E,A$两个数组表示了net连接的vertex，其中$E$的每个entry有两个分量，分别是这个net在$A$的from(f)和size(s)
+- Contraction
+  - 对于一个vertex-pair $(u,v)$，判断其contraction-partner $v$是直接delete还是relink
+- Uncontraction
+  - 判断是需要revert a delete or relink
+### Computing $k$-way Partitions via Recursive Bipartitioning
