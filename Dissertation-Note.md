@@ -122,3 +122,48 @@
 - Uncontraction
   - 判断是需要revert a delete or relink
 ### Computing $k$-way Partitions via Recursive Bipartitioning
+- 超图H的两种子结构
+  - 设子节点集$V_i \subset V$ 
+  - subhypergraph
+    - $H_{V_i} = (V_i, \{e \cap V_i | e \in E, e \cap V_i \neq \emptyset\})$
+    - 也就是说，只要一个net $e$与节点子集$V_i$交集非空，那么就可以添加到子超图中
+  - section hypergraph
+    - 与subhypergraph类似，但是必须$e \subseteq V_i$
+    - $H \times {V_i} = (V_i, \{e | e \in E, e \subseteq V_i\})$
+- 算法思想
+  - 不需要初始的划分，只需要一个输入一个超图以及各种bound
+  - contract/coarsening
+  - initial partitioning
+  - untract and refine
+  - 根据选定的object来对子结构进行递归
+    - cut-net使用section hypergraph，因为cut-net只看割集的数量，section中不含割集，这些割集的贡献已经被考虑过了
+    - connectivity使用sub-hypergraph
+### Preprocessing Phase
+#### Pin Sparcification
+- 一个超图可能有很多similar vertices，需要将其合并
+- 定义similarity
+  - Jaccard Coefficient
+    - $J(u,v) = \frac{\vert I(u) \cap I(u) \vert}{\vert I(u) \cup I(v) \vert }$
+  - $D(u,v) := 1 - J(u,v)$
+- 计算
+  - 可以通过遍历的方法去计算，但这样太慢了，提出locality sensitive hashing的方法降低时间复杂度
+- Locality Sensitive Hashing (LSH)
+  - 使用某种方式散列元素，使得相似的元素有更高的概率有相同的哈希值，反之更低的概率
+- Min-Hash Fingerprint
+  - 这里的hash function比较简单，$h(x) := ax + b \pmod{P}$
+  - $h_i(v) := \min_{e}\{h_i(e) | e \in I(v), h_i \in \Sigma\}$
+  - 选取$i$个不同的hash function，就可以求出$i$个hashing of vertex，然后得到一个vertex的finger print
+  - 有着相同fingerprint的vertex分到一个cluster中
+- 起初每个vertex都有自己的cluster，经过基于LSH的算法之后，将减少cluster的数量
+
+#### Detecting Community Structure
+- Motivation
+  - Coarsening阶段greedy and local，需要引入更多的global information
+- 先使用正常的community detection algorithm发现community，然后再每个community中进行vertex contraction来缩小net size
+- Hypergraph Representation
+  - 为了使用community detection，需要表示hypergraph
+  - Clique
+    - 不行，每个net变成一个完全图，添加过多的边，破坏了原有的稀疏性
+  - Bipartite
+- Weighting edge
+  - 需要给bipartite中的edge赋权重，根据vertex-node和edge-node（net-node）的相对关系，选择不同的赋权方式，以实现更好的community detection
