@@ -180,3 +180,9 @@
   - 每次contraction之后将代表元的邻居节点置为invalid
   - 如果之后contraction取到了invalid的节点，再更新PQ
 - 其他更加简单的Coarsening算法
+
+### Portfolio-Based Initial Partitioning
+- KaHyPar uses a portfolio of several algorithms to compute an initial solution
+- 使用一些列算法求出一个initial partition
+
+### 
