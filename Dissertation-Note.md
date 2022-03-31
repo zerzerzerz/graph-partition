@@ -26,6 +26,7 @@
 
 ## Preliminaries
 ### Notation and Definitions
+- ==各种基本定义详见PDF的Page 22==
 - Hypergraph
   - vertex
   - hyperedge/net
@@ -167,3 +168,15 @@
   - Bipartite
 - Weighting edge
   - 需要给bipartite中的edge赋权重，根据vertex-node和edge-node（net-node）的相对关系，选择不同的赋权方式，以实现更好的community detection
+
+### Coarsening Phase
+- Heavy edge rating function for vertices pair $(u,v)$
+- 基于KasPar的Coarsening算法，进行generalization
+- Coarsening Algorithm
+  - 计算每对节点的rating，用一个优先级队列PQ维护
+  - 每次取队首进行contraction
+  - 从PQ中删除被合并的节点，重新计算rating（代表元u与其邻居的rating），重新选择contraction partner
+- Lazy update strategy
+  - 每次contraction之后将代表元的邻居节点置为invalid
+  - 如果之后contraction取到了invalid的节点，再更新PQ
+- 其他更加简单的Coarsening算法
