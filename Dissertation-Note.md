@@ -123,6 +123,13 @@
 - Uncontraction
   - 判断是需要revert a delete or relink
 ### Computing $k$-way Partitions via Recursive Bipartitioning
+#### 算法概述
+  - Preprocessing
+  - n-level coarsening, contracting vertices pair $(u,v)$
+  - Initial bi-partitioning
+  - Uncontracting and refinement
+  - Recursive bi-partitioning on sub-structure
+- ![](fig/Dissertation-Note/n-level%20recursive%20bipartitioning.jpg)
 - 超图H的两种子结构
   - 设子节点集$V_i \subset V$ 
   - subhypergraph
@@ -183,6 +190,29 @@
 
 ### Portfolio-Based Initial Partitioning
 - KaHyPar uses a portfolio of several algorithms to compute an initial solution
-- 使用一些列算法求出一个initial partition
+- 使用一系列算法求出一个initial partition
 
-### 
+### Localized $2$-way and $k$-way FM Local Search
+- 从这里开始就属于Refinement的部分了，Refinement是在uncontraction之后进行的
+- FM Gain，移动之后，从cut变成internal的，减去，从internal变成cut的
+#### $2$-way
+- 使用时机
+  - 每次uncontraction之后使用
+- 初始化
+  - 两个优先级队列，每个block一个，置为empty和disabled
+  - 标记全部的节点为inactive和unmarked
+- 开始
+  - 激活所有的代表节点和刚刚因为uncontraction而新增的节点，同时需要确保被激活的节点都是border vertex
+- 计算FM gain
+  - 激活一个节点，也就意味着计算其FM gain，也就是将其从原来的block移动到其他所有的block来计算这次move的gain（因为这里是2-way因此target block只有1个）
+  - 将gain入队至target block对应的PQ
+- 寻找最优gain并move
+  - 对于那些非空并且underloaded的PQ，将其置为enabled
+  - 从全部的enabled的PQ中，找出gain最大的，实施这次move，并将被移动的节点（不妨设为$v$）置为inactive和marked（marked意味着这个节点不能再次被激活了）
+- 更新$v$的邻居节点
+  - 激活全部的邻居节点
+  - 对于那些internal的邻居节点（不位于cut中），将其置为inactive并且把它们对应的move从全部的PQ中删除
+  - 更新剩余的、active邻居节点
+- 重复上述操作，也就是取PQs中的最高gain，直到全部的PQ都disabled
+- 当local search结束时，和当前的最优解进行比较，如果更差，就reverse all moves然后重来（从initialization重新开始）
+#### $k$-way
