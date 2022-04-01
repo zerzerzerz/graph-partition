@@ -195,6 +195,7 @@
 ### Localized $2$-way and $k$-way FM Local Search
 - 从这里开始就属于Refinement的部分了，Refinement是在uncontraction之后进行的
 - FM Gain，移动之后，从cut变成internal的，减去，从internal变成cut的
+- 根据选择的metric更新gain，增量更新，避免全部计算
 #### $2$-way
 - 使用时机
   - 每次uncontraction之后使用
@@ -216,3 +217,8 @@
 - 重复上述操作，也就是取PQs中的最高gain，直到全部的PQ都disabled
 - 当local search结束时，和当前的最优解进行比较，如果更差，就reverse all moves然后重来（从initialization重新开始）
 #### $k$-way
+- 直接就有k个block进行划分
+- 一种极端是维护$k \times (k-1)$个PQ，另一种极端是直接放弃基于FM的方法
+- 为了提高效率提出了许多减少PQ的算法
+- 和2-way基本类似，但是对PQ的overloaded判断更加严格了
+
