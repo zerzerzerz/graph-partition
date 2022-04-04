@@ -195,7 +195,10 @@
 ### Localized $2$-way and $k$-way FM Local Search
 - 从这里开始就属于Refinement的部分了，Refinement是在uncontraction之后进行的
 - FM Gain，移动之后，从cut变成internal的，减去，从internal变成cut的
-- 根据选择的metric更新gain，增量更新，避免全部计算
+- 根据选择的metric更新gain，增量更新，避免全部计算，以connectivity为例，移动v之后
+  - u如果在from中，且u是net和from唯一的交集，gain增加
+  - u如果在to中，且u本来是net和to的唯一交集，gain降低
+  - u不在from或者to中，此时需要根据u的target block确定gain的变化量
 #### $2$-way
 - 使用时机
   - 每次uncontraction之后使用
