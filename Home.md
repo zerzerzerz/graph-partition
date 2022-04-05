@@ -15,7 +15,7 @@
     - Cut-net metric
       - 是传统的图分割问题中edge-cut的推广，目标函数就是将那些连接了多个节点块的net的权重相加，目标是使其最小化
     - Connectivity metric
-      - 每一个节点块都连接了若干net，对于任意一个节点块，设其连接的net的数量为$lambda$，目标函数就在原先的Cut-net的基础上，给每个net的权重分配一个系数，这个系数就是该net所对应的$lambda - 1$
+      - 每一个节点块都连接了若干net，对于任意一个节点块，设其连接的net的数量为$\lambda$，目标函数就在原先的Cut-net的基础上，给每个net的权重分配一个系数，这个系数就是该net所对应的$\lambda - 1$
 - 符号化表述
   - Hypergraph, $H = (V,E,c,\omega)$, $V$ is vertex set, $E$ is edge(net) set, $c$ is weight of each node, $\omega$ is weight of each egde(net)
   - k-ways partition $\Pi = \{V_1, V_2, ..., V_k \}$,$$c(V_i) \le (1+\varepsilon) \lceil \frac{c(V)}{k} \rceil$$
@@ -36,9 +36,8 @@
 - 多层次（Multi-level）， 分为下面的三个阶段
   - Coarsening
     - 将超图粗化处理，获取很多更小的超图的层次结构
-  - Second phase
-    - initial partition，获取最小的超图
-  - Final phase
+  - Initial Partitioning
+  - Refinement/Local Search/Uncoarsening
     - 取消粗化，在每一个层级上使用本地搜索（local search）的方法提高划分质量
   - [详细算法](https://github.com/kahypar/research-publications)
 - 其他特性
